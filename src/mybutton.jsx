@@ -8,6 +8,18 @@
             degree: undefined
          };
       },
+      componentDidMount: function () {
+         this.getDOMNode().parentElement.addEventListener('my event', this.handleEvent);
+      },
+
+      componentWillUnmount: function () {
+         this.getDOMNode().parentElement.removeEventListener('my event');
+      },
+
+      handleEvent: function (e) {
+         console.log('receive event:' + e.detail);
+      },
+
       doClick: function () {
          console.log(this.state.value);
       },
