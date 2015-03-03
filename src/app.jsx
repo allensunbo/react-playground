@@ -48,7 +48,7 @@
          document.querySelector('#example2').dispatchEvent(evt);
       }
       else
-         this.getDOMNode().fireEvent("my event");
+         document.querySelector('#example2').fireEvent("my event");
    }
 
    function doGet(url, callback) {
