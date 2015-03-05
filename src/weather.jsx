@@ -1,6 +1,6 @@
 (function () {
    var React = require("react");
-
+   var renderId = 'weather';
 
    var App = React.createClass({
       getInitialState: function () {
@@ -19,7 +19,7 @@
       }
    });
 
-   React.render(<App/>, document.getElementById('example'));
+   React.render(<App/>, document.getElementById(renderId));
 
    function getData() {
       var self = this;
@@ -35,7 +35,7 @@
             });
 
             // also fire event to the second component to test communication
-            sendEvent(self, '#example2');
+            sendEvent('#submit', self.state);
 
          } else {
             console.log('error getting weather data');
@@ -53,12 +53,12 @@
       console.log(this);
    }
 
-   function sendEvent(scope, toId) {
+   function sendEvent(toId, data) {
       if ("createEvent" in document) {
          // var evt = document.createEvent("HTMLEvents");
          // evt.initEvent("my event", true, true);
          var evt = new CustomEvent('WeatherEvent', {
-            'detail': scope.state
+            'detail': data
          });
          document.querySelector(toId).dispatchEvent(evt);
       }

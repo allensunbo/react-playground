@@ -1,5 +1,6 @@
 (function () {
    var React = require("react");
+   var renderId = 'submit';
 
    var MyButton = React.createClass({
       getInitialState: function () {
@@ -39,6 +40,6 @@
       }
    });
 
-   React.render(<MyButton/>, document.getElementById('example2'));
+   React.render(<MyButton/>, document.getElementById(renderId));
 
 })();
