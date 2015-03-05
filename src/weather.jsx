@@ -19,7 +19,7 @@
       }
    });
 
-   React.render(<App/>, document.getElementById("example"));
+   React.render(<App/>, document.getElementById('example'));
 
    function getData() {
       var self = this;
@@ -33,22 +33,16 @@
                speed: r.wind.speed,
                degree: r.wind.deg
             });
+
+            // also fire event to the second component to test communication
+            sendEvent(self, '#example2');
+
          } else {
             console.log('error getting weather data');
          }
       };
       var doGetBind = doGet.bind(self);
       doGetBind('http://api.openweathermap.org/data/2.5/weather?q=London,uk', callback);
-
-      // also fire event to the second component to test communication
-      if ("createEvent" in document) {
-         // var evt = document.createEvent("HTMLEvents");
-         // evt.initEvent("my event", true, true);
-         var evt = new CustomEvent('my event', {'detail': 'from first component'});
-         document.querySelector('#example2').dispatchEvent(evt);
-      }
-      else
-         document.querySelector('#example2').fireEvent("my event");
    }
 
    function doGet(url, callback) {
@@ -57,6 +51,20 @@
       request.onload = callback.bind(undefined, request, this);
       request.send();
       console.log(this);
+   }
+
+   function sendEvent(scope, toId) {
+      if ("createEvent" in document) {
+         // var evt = document.createEvent("HTMLEvents");
+         // evt.initEvent("my event", true, true);
+         var evt = new CustomEvent('WeatherEvent', {
+            'detail': scope.state
+         });
+         document.querySelector(toId).dispatchEvent(evt);
+      }
+      else {
+         document.querySelector(toId).fireEvent('WeatherEvent');
+      }
    }
 
 })();

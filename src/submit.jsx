@@ -9,15 +9,18 @@
          };
       },
       componentDidMount: function () {
-         this.getDOMNode().parentElement.addEventListener('my event', this.handleEvent);
+         this.getDOMNode().parentElement.addEventListener('WeatherEvent', this.handleEvent);
       },
 
       componentWillUnmount: function () {
-         this.getDOMNode().parentElement.removeEventListener('my event');
+         this.getDOMNode().parentElement.removeEventListener('WeatherEvent');
       },
 
       handleEvent: function (e) {
          console.log('receive event:' + e.detail);
+         this.setState({
+            value: 'speed=' + e.detail.speed + ', degree=' + e.detail.degree
+         });
       },
 
       doClick: function () {
@@ -36,6 +39,6 @@
       }
    });
 
-   React.render(<MyButton/>, document.getElementById("example2"));
+   React.render(<MyButton/>, document.getElementById('example2'));
 
 })();
