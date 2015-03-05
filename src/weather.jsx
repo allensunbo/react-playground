@@ -1,6 +1,5 @@
 (function () {
    var React = require("react");
-   var renderId = 'weather';
 
    var App = React.createClass({
       getInitialState: function () {
@@ -19,7 +18,7 @@
       }
    });
 
-   React.render(<App/>, document.getElementById(renderId));
+   React.render(<App/>, document.getElementById('weather'));
 
    function getData() {
       var self = this;
@@ -35,7 +34,8 @@
             });
 
             // also fire event to the second component to test communication
-            sendEvent('#submit', self.state);
+            // sendEvent('#submit', self.state);
+            sendEventByClass('box', self.state);
 
          } else {
             console.log('error getting weather data');
@@ -53,7 +53,7 @@
       console.log(this);
    }
 
-   function sendEvent(toId, data) {
+   function sendEventById(toId, data) {
       if ("createEvent" in document) {
          // var evt = document.createEvent("HTMLEvents");
          // evt.initEvent("my event", true, true);
@@ -64,6 +64,29 @@
       }
       else {
          document.querySelector(toId).fireEvent('WeatherEvent');
+      }
+   }
+
+   // send event to all dom nodes with class="klass"
+   function sendEventByClass(klass, data) {
+      if (klass.indexOf('.') !== 0) {
+         klass = '.' + klass;
+      }
+      var elements = document.querySelectorAll(klass);
+      if (elements.length > 0) {
+         if ("createEvent" in document) {
+            // var evt = document.createEvent("HTMLEvents");
+            // evt.initEvent("my event", true, true);
+            var evt = new CustomEvent('WeatherEvent', {
+               'detail': data
+            });
+            for (var i = 0; i < elements.length; i++) {
+               elements[i].dispatchEvent(evt);
+            }
+         }
+         else {
+            document.querySelector(toId).fireEvent('WeatherEvent');
+         }
       }
    }
 
