@@ -2,7 +2,7 @@ var SubmitWidget;
 
 (function () {
    var React = require("react");
-   console.log('creating component MyButton');
+   console.log('creating component SubmitWidget');
    SubmitWidget = React.createClass({
       getInitialState: function () {
          return {
@@ -19,9 +19,9 @@ var SubmitWidget;
       },
 
       handleEvent: function (e) {
-         console.log('receive event:' + e.detail);
+         console.log('receive event from:' + e.detail.from);
          this.setState({
-            value: 'speed=' + e.detail.speed + ', degree=' + e.detail.degree
+            value: 'speed=' + e.detail.data.speed + ', degree=' + e.detail.data.degree
          });
       },
 
