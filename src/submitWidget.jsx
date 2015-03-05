@@ -1,7 +1,9 @@
+var SubmitWidget;
+
 (function () {
    var React = require("react");
-
-   var MyButton = React.createClass({
+   console.log('creating component MyButton');
+   SubmitWidget = React.createClass({
       getInitialState: function () {
          return {
             speed: undefined,
@@ -33,13 +35,14 @@
       },
       render() {
          return <div>
-            <input onChange={this.doChange} value={this.state.value}></input>
+            <input onChange={this.doChange} value={this.state.value} className={this.props.className}></input>
             <button onClick={this.doClick}>Submit</button>
          </div>
       }
    });
 
-   React.render(<MyButton/>, document.getElementById('submit'));
-   React.render(<MyButton/>, document.getElementById('submit2'));
-
 })();
+
+module.exports = {
+   component: SubmitWidget
+};
